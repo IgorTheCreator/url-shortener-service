@@ -23,3 +23,9 @@ REST API с использованием Node.js, NestJS, Prisma ORM, TypeScript
 ```
 docker-compose up --build
 ```
+
+Документацию можно посмотреть
+
+```
+http://localhost:3000/docs
+```
