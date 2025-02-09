@@ -1,0 +1,6 @@
+.prettierrc
+.eslint.config.mjss
+.git
+.cache
+/dist
+/node_modules

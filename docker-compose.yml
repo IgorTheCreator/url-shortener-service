@@ -1,0 +1,52 @@
+name: url-shortner-service
+services:
+  postgres_db:
+    image: postgres:alpine
+    container_name: url-shortner-service-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - url-shortener-service-network
+
+  redis_db:
+    image: redis:latest
+    container_name: url-shortner-service-cache
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    networks:
+      - url-shortener-service-network
+
+  url-shortener-service:
+    image: url-shortener-service-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    depends_on:
+      - redis_db
+      - postgres_db
+    networks:
+      - url-shortener-service-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  url-shortener-service-network:
+    driver: bridge
