@@ -16,9 +16,7 @@ REST API с использованием Node.js, NestJS, Prisma ORM, TypeScript
 
 ## Как запустить приложение
 
-```
 Создать файл .env. Пример можно посмотреть в файле .env.sample
-```
 
 ```
 docker-compose up --build
